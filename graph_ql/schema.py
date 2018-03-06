@@ -1,5 +1,5 @@
 import graphene
-# from django.db import connection
+from django.db import connection
 
 
 class Datasource(graphene.ObjectType):
@@ -8,16 +8,21 @@ class Datasource(graphene.ObjectType):
 
 
 class Query(graphene.ObjectType):
-    datasources = graphene.String(description='A typical hello world')
-    hello = graphene.String(description='A typical hello world')
+    datasources = graphene.List(Datasource)
 
     def resolve_datasources(self, info):
-        print('RESOLVE DATASOURCES')
-        # return [{
-        #     "id": 99,
-        #     "name": "fake machine",
-        # }]
-        return "datasources string II"
+        cursor = connection.cursor()
+        query = "select id, name from datasources"
+        cursor.execute(query, (), )
 
-    def resolve_hello(self, info):
-        return 'World'
+        results = cursor.fetchall()
+        datasources = []
+        for datasource in results:
+            datasources.append(
+                Datasource(
+                    id=datasource[0],
+                    name=datasource[1],
+                )
+            )
+
+        return datasources
