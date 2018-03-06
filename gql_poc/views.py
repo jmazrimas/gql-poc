@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.db import connection
 import json
 
 
@@ -8,20 +9,20 @@ def index(request):
     :return: a list of all factories, no filtering (yet)
     """
 
-    # cursor = connection.cursor()
-    # query = "select id, name, created_at from factory order by id"
-    # cursor.execute(query, (),)
-    #
-    # results = cursor.fetchall()
-    # factory_obj = []
-    # for factory in results:
-    #     factory_obj.append({
-    #         'id': factory[0],
-    #         'name': factory[1],
-    #         'created_at': str(factory[2])
-    #     })
+    cursor = connection.cursor()
+    query = "select id, name, created_at from factory order by id"
+    cursor.execute(query, (),)
 
-    response = HttpResponse(json.dumps({"a key": "a value"}))
+    results = cursor.fetchall()
+    factory_obj = []
+    for factory in results:
+        factory_obj.append({
+            'id': factory[0],
+            'name': factory[1],
+            'created_at': str(factory[2])
+        })
+
+    response = HttpResponse(json.dumps(factory_obj))
     response.status_code = 200
     response['Access-Control-Allow-Origin'] = '*'
     return response
