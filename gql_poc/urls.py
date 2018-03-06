@@ -20,4 +20,5 @@ from django.conf.urls import url
 
 urlpatterns = [
     url(r'index', views.index, name="index_view"),
+    url(r'gql', views.gql, name="gql_view"),
 ]
