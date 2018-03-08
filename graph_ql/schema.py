@@ -6,8 +6,7 @@ from graphene_django.types import DjangoObjectType
 from machine.models import Machine
 from datasource.models import Datasource
 
-print(Datasource.objects.all())
-print(Machine.objects.all())
+print('MACHINE NAME', Datasource.objects.all()[0].machine.name)
 
 # class Datasource(graphene.ObjectType):
 #     id = graphene.ID()
