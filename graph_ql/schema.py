@@ -1,56 +1,68 @@
 import graphene
 from django.db import connection
+from graphene_django.types import DjangoObjectType
 
+# from factory.models import Factory
+from machine.models import Machine
+from datasource.models import Datasource
 
-class Datasource(graphene.ObjectType):
-    id = graphene.ID()
-    name = graphene.String()
+print(Datasource.objects.all())
+print(Machine.objects.all())
+
+# class Datasource(graphene.ObjectType):
+#     id = graphene.ID()
+#     name = graphene.String()
+
+class DatasourceType(DjangoObjectType):
+    class Meta:
+        model = Datasource
 
 
 class Factory(graphene.ObjectType):
     id = graphene.ID()
     name = graphene.String()
-    datasources = graphene.List(Datasource)
+    # datasources = graphene.List(Datasource)
 
-    def resolve_datasources(self, info):
-        cursor = connection.cursor()
-        query = "select d.id, d.name " \
-                "from machines m " \
-                "join datasources d on d.machine_id = m.key " \
-                "where m.factory_id={}".format(self.id)
-        cursor.execute(query, (), )
-
-        results = cursor.fetchall()
-        datasources = []
-        for datasource in results:
-            datasources.append(
-                Datasource(
-                    id=datasource[0],
-                    name=datasource[1],
-                )
-            )
-        return datasources
+    # def resolve_datasources(self, info):
+    #     cursor = connection.cursor()
+    #     query = "select d.id, d.name " \
+    #             "from machines m " \
+    #             "join datasources d on d.machine_id = m.key " \
+    #             "where m.factory_id={}".format(self.id)
+    #     cursor.execute(query, (), )
+    #
+    #     results = cursor.fetchall()
+    #     datasources = []
+    #     for datasource in results:
+    #         datasources.append(
+    #             Datasource(
+    #                 id=datasource[0],
+    #                 name=datasource[1],
+    #             )
+    #         )
+    #     return datasources
 
 
 class Query(graphene.ObjectType):
-    datasources = graphene.List(Datasource)
+    datasources = graphene.List(DatasourceType)
     factories = graphene.List(Factory)
 
     def resolve_datasources(self, info):
-        cursor = connection.cursor()
-        query = "select id, name from datasources"
-        cursor.execute(query, (), )
-
-        results = cursor.fetchall()
-        datasources = []
-        for datasource in results:
-            datasources.append(
-                Datasource(
-                    id=datasource[0],
-                    name=datasource[1],
-                )
-            )
-        return datasources
+        # cursor = connection.cursor()
+        # query = "select id, name from datasources"
+        # cursor.execute(query, (), )
+        #
+        # results = cursor.fetchall()
+        # datasources = []
+        # for datasource in results:
+        #     datasources.append(
+        #         Datasource(
+        #             id=datasource[0],
+        #             name=datasource[1],
+        #         )
+        #     )
+        # return datasources
+        return Datasource.objects.all()
 
     def resolve_factories(self, info):
         cursor = connection.cursor()
