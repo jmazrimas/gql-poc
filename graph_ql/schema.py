@@ -21,14 +21,14 @@ class MachineType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     datasources = graphene.List(DatasourceType)
-    factories = graphene.List(FactoryType)
+    factories = graphene.List(FactoryType, id=graphene.Int(), name=graphene.String())
     machines = graphene.List(MachineType)
 
-    def resolve_datasources(self, info):
-        return Datasource.objects.all()
+    def resolve_datasources(self, info, **kwargs):
+        return Datasource.objects.all().filter(**kwargs)
 
-    def resolve_factories(self, info):
-        return Factory.objects.all()
+    def resolve_factories(self, info, **kwargs):
+        return Factory.objects.all().filter(**kwargs)
 
-    def resolve_machines(self, info):
-        return Machine.objects.all()
+    def resolve_machines(self, info, **kwargs):
+        return Machine.objects.all().filter(**kwargs)

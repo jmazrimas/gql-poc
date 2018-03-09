@@ -42,6 +42,9 @@ def gql(request):
 
     result = schema.execute(req_body)
 
+    if result.errors:
+        print('ERROR:', result.errors)
+
     response = HttpResponse(json.dumps(result.data))
     response.status_code = 200
     response['Access-Control-Allow-Origin'] = '*'
