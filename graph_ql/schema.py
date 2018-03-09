@@ -16,6 +16,13 @@ class FactoryType(DjangoObjectType):
     class Meta:
         model = Factory
 
+    datasources = graphene.List(DatasourceType)
+
+    def resolve_datasources(self, info):
+        machines = Machine.objects.filter(factory_id=self.id)
+        return Datasource.objects.all().filter(machine__in=machines)
+        # return Datasource.objects.all()
+
 
 class MachineType(DjangoObjectType):
     class Meta:
@@ -23,10 +30,10 @@ class MachineType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    datasources = graphene.List(DatasourceType)
     # valid query params are defined here:
+    datasources = graphene.List(DatasourceType, id=graphene.Int())
     factories = graphene.List(FactoryType, id=graphene.Int(), name=graphene.String())
-    machines = graphene.List(MachineType)
+    machines = graphene.List(MachineType, id=graphene.Int())
 
     def resolve_datasources(self, info, **kwargs):
         return Datasource.objects.all().filter(**kwargs)

@@ -1,6 +1,6 @@
 from django.db import models
 # from machine.models import Machine
-# from factory.models import Factory
+from factory.models import Factory
 
 
 class Datasource(models.Model):
