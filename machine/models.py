@@ -7,7 +7,7 @@ class Machine(models.Model):
     key = models.CharField()
     name = models.CharField()
     # factory = models.ForeignKey('factory.Factory')
-    factory = models.ForeignKey('Factory')
+    factory = models.ForeignKey('Factory', related_name='machines')
 
     class Meta:
         app_label = 'gpl_poc'
