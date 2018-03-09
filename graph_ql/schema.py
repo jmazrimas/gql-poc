@@ -11,16 +11,20 @@ class DatasourceType(DjangoObjectType):
     class Meta:
         model = Datasource
 
+
 class FactoryType(DjangoObjectType):
     class Meta:
         model = Factory
+
 
 class MachineType(DjangoObjectType):
     class Meta:
         model = Machine
 
+
 class Query(graphene.ObjectType):
     datasources = graphene.List(DatasourceType)
+    # valid query params are defined here:
     factories = graphene.List(FactoryType, id=graphene.Int(), name=graphene.String())
     machines = graphene.List(MachineType)
 

@@ -45,7 +45,7 @@ def gql(request):
     if result.errors:
         print('ERROR:', result.errors)
 
-    response = HttpResponse(json.dumps(result.data))
+    response = HttpResponse(json.dumps(result.data), content_type='application/json')
     response.status_code = 200
     response['Access-Control-Allow-Origin'] = '*'
     return response
