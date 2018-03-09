@@ -40,6 +40,8 @@ def gql(request):
     req_body = request.body.decode('utf-8')
     schema = Schema(query=Query)
 
+    print('GQL VIEW')
+
     result = schema.execute(req_body)
 
     response = HttpResponse(json.dumps(result.data))

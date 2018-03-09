@@ -6,7 +6,8 @@ class Machine(models.Model):
     id = models.IntegerField()
     key = models.CharField()
     name = models.CharField()
-    factory = models.ForeignKey('factory.Factory')
+    # factory = models.ForeignKey('factory.Factory')
+    factory = models.ForeignKey('Factory')
 
     class Meta:
         app_label = 'gpl_poc'
