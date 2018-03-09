@@ -2,15 +2,14 @@ import graphene
 from django.db import connection
 from graphene_django.types import DjangoObjectType
 
-# from factory.models import Factory
+from factory.models import Factory
 from machine.models import Machine
 from datasource.models import Datasource
 
-print('MACHINE NAME', Datasource.objects.all()[0].machine.name)
+print('Factory NAME', Factory.objects.get(pk=1).name)
+print('Machine NAME', Machine.objects.get(pk=1).name)
+print('Datasource NAME', Datasource.objects.get(pk=8).name)
 
-# class Datasource(graphene.ObjectType):
-#     id = graphene.ID()
-#     name = graphene.String()
 
 class DatasourceType(DjangoObjectType):
     class Meta:

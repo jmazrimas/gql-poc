@@ -1,11 +1,12 @@
 from django.db import models
-# from datasource.models import Datasource
+# from factory.models import Factory
+
 
 class Machine(models.Model):
     id = models.IntegerField()
     key = models.CharField()
-    factory_id = models.IntegerField()
     name = models.CharField()
+    factory = models.ForeignKey('factory.Factory')
 
     class Meta:
         app_label = 'gpl_poc'
