@@ -6,10 +6,6 @@ from factory.models import Factory
 from machine.models import Machine
 from datasource.models import Datasource
 
-# print('Factory NAME', Factory.objects.get(pk=1).machine_set.all()[0].name)
-# print('Machine NAME', Machine.objects.get(pk=1).factory.name)
-# print('Datasource NAME', Datasource.objects.get(pk=8).name)
-
 
 class DatasourceType(DjangoObjectType):
     class Meta:
